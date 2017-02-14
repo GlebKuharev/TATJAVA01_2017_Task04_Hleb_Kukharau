@@ -3,6 +3,9 @@ package catalog.controller.command.impl;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import catalog.controller.command.Command;
 import catalog.controller.exception.ControllerException;
 import catalog.service.CatalogService;
@@ -10,6 +13,8 @@ import catalog.service.exception.ServiceException;
 import catalog.service.factory.ServiceFactory;
 
 public class Search implements Command {
+	
+	private final static Logger log = LogManager.getRootLogger();
 
 	public String execute (String request) throws ControllerException {
 
@@ -24,7 +29,7 @@ public class Search implements Command {
 			response = catalogService.searchNews(keyWord); 
 		} catch (ServiceException | NoSuchElementException e) { 
 			// write log 
-			response = "Error during search procedure";
+			log.error("Error during search procedure", e);
 			throw new ControllerException(e);
 		}
 		if (response == null) {

@@ -1,5 +1,6 @@
 package catalog.controller.command.impl;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -13,28 +14,28 @@ import catalog.service.CatalogService;
 import catalog.service.exception.ServiceException;
 import catalog.service.factory.ServiceFactory;
 
-public class Add implements Command {
+public class SearchByName implements Command {
 	
-	private final static Logger Log = LogManager.getRootLogger();
+	private final static Logger log = LogManager.getRootLogger();
 
-	public String execute (String request) throws ControllerException {
-
+	@Override
+	public String execute(String request) throws ControllerException {
 		String response = null;
-
+		ArrayList<News> newsList = null;
 		try {
 			StringTokenizer tokens = new StringTokenizer(request, " ");
-			String category = tokens.nextToken();
-			String releaseDate = tokens.nextToken();
-			String name = tokens.nextToken();
-			String description = tokens.nextToken();
-			
-			News news = new News(category, releaseDate, name, description);
+			String keyWord = tokens.nextToken();
 			ServiceFactory serviceFactory = ServiceFactory.getInstance(); 
 			CatalogService catalogService = serviceFactory.getCatalogService();
-			response = catalogService.addNews(news); 
-		} catch (ServiceException | NoSuchElementException e) { 
-			Log.error("Controller exception, error during adding procedure: method execute, class Add", e);
+			newsList = catalogService.searchNewsByName(keyWord); 
+			response = newsList.toString();
+		} catch (ServiceException | NoSuchElementException | NullPointerException e) { 
+			// write log 
+			log.error("Error during search_by_name procedure", e);
 			throw new ControllerException(e);
+		}
+		if (response == null) {
+			response = "nothing found";
 		}
 		return response;
 	}

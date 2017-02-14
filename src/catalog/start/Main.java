@@ -11,6 +11,26 @@ public class Main {
 		Controller controller = new Controller();
 		String response = controller.executeTask(command);
 		System.out.println(response);
+		
+		command = "search_by_year 1957";
+		response = controller.executeTask(command);
+		System.out.println(response);
+		
+		command = "search_by_name st_anger";
+		response = controller.executeTask(command);
+		System.out.println(response);
+		
+		command = "search_by_category music";
+		response = controller.executeTask(command);
+		System.out.println(response);
+		
+		command = "search_by_category book";
+		response = controller.executeTask(command);
+		System.out.println(response);
+		
+		command = "search_by_year 2010";
+		response = controller.executeTask(command);
+		System.out.println(response);
 	}
 
 }

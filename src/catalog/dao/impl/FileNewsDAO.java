@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import catalog.bean.News;
 import catalog.dao.NewsDAO;
@@ -46,6 +47,24 @@ public class FileNewsDAO implements NewsDAO {
 			throw new DAOException(e);
 		} 
 		return response;
+	}
+
+	@Override
+	public ArrayList<News> searchNewsByName(String name) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<News> searchNewsByCategory(String category) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<News> searchNewsByYear(int year) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
