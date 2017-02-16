@@ -13,12 +13,20 @@ import catalog.service.CatalogService;
 import catalog.service.exception.ServiceException;
 
 public class CatalogServiceImpl implements CatalogService {
-	
+
 	private final static Logger log = LogManager.getRootLogger();
 
 	@Override
 	public String addNews(News news) throws ServiceException {
-		String response = null;
+		
+		String response;
+
+		if (news == null) {
+			response = "news is empty, please enter valid news";
+			return null;
+		}
+
+
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance(); 
 			NewsDAO newsDAO = daoObjectFactory.getNewsDAO(); 
@@ -30,27 +38,19 @@ public class CatalogServiceImpl implements CatalogService {
 		return response;
 	}
 
-	@Override
-	public String searchNews(String keyword) throws ServiceException {
-		String response = null;
-		try {
-			DAOFactory daoObjectFactory = DAOFactory.getInstance(); 
-			NewsDAO newsDAO = daoObjectFactory.getNewsDAO(); 
-			response = newsDAO.searchNews(keyword);
-		} catch (DAOException e) {
-			log.error("error in searchNews CatalogService");
-			throw new ServiceException(e);
-		}
-		return response;
-	}
 
 	@Override
-	public ArrayList<News> searchNewsByName(String keyWord) throws ServiceException {
+	public ArrayList<News> searchNewsByName(String keyword) throws ServiceException {
+		
+		if (keyword == null || keyword.isEmpty()) {
+			return null;
+		}
+		
 		ArrayList<News> newsList = null;
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance(); 
 			NewsDAO newsDAO = daoObjectFactory.getNewsDAO(); 
-			newsList = newsDAO.searchNewsByName(keyWord);
+			newsList = newsDAO.searchNewsByName(keyword);
 		} catch (DAOException e) {
 			log.error("error in searchNewsByName CatalogService");
 			throw new ServiceException(e);
@@ -59,12 +59,17 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	@Override
-	public ArrayList<News> searchNewsByCategory(String keyWord) throws ServiceException {
+	public ArrayList<News> searchNewsByCategory(String keyword) throws ServiceException {
+		
+		if (keyword == null || keyword.isEmpty()) {
+			return null;
+		}
+		
 		ArrayList<News> newsList = null;
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance(); 
 			NewsDAO newsDAO = daoObjectFactory.getNewsDAO(); 
-			newsList = newsDAO.searchNewsByCategory(keyWord);
+			newsList = newsDAO.searchNewsByCategory(keyword);
 		} catch (DAOException e) {
 			log.error("error in searchNewsByCategory CatalogService");
 			throw new ServiceException(e);
@@ -74,6 +79,11 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public ArrayList<News> searchNewsByYear(int year) throws ServiceException {
+		
+		if (year<=0) {
+			return null;
+		}
+		
 		ArrayList<News> newsList = null;
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance(); 

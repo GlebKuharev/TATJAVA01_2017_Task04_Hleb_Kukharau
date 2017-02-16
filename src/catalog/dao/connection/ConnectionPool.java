@@ -17,7 +17,6 @@ import java.sql.SQLXML;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.sql.Struct;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -64,7 +63,7 @@ public final class ConnectionPool{
 	}
 
 	public void initPoolData() throws ConnectionPoolException{
-		Locale.setDefault(Locale.ENGLISH);
+
 		try{
 			Class.forName(driverName);
 			givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
@@ -78,11 +77,11 @@ public final class ConnectionPool{
 		}
 		catch(SQLException e){
 			LOG.error("SQLException: method initPoolData, class ConnectionPool");
-			throw new ConnectionPoolException("", e);
+			throw new ConnectionPoolException("SQL exception in connection pool", e);
 		}
 		catch(ClassNotFoundException e){
 			LOG.error("ClassNotFoundException: method initPoolData, class ConnectionPool");
-			throw new ConnectionPoolException("", e);
+			throw new ConnectionPoolException("Can't find database driver class", e);
 		}
 	}
 
@@ -106,7 +105,7 @@ public final class ConnectionPool{
 			givenAwayConQueue.add(conn);
 		}catch(InterruptedException e){
 			LOG.error("InterruptedException: method takeConnection, class ConnectionPool");
-			throw new ConnectionPoolException("", e);
+			throw new ConnectionPoolException("Error connecting to the data source", e);
 		}
 		return conn;
 	}

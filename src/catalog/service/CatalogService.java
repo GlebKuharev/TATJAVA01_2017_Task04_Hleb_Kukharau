@@ -8,7 +8,6 @@ import catalog.service.exception.ServiceException;
 public interface CatalogService {
 	
 	String addNews(News news) throws ServiceException;
-	String searchNews(String keyword) throws ServiceException;
 	ArrayList<News> searchNewsByName(String keyWord) throws ServiceException;
 	ArrayList<News> searchNewsByCategory(String keyWord) throws ServiceException;
 	ArrayList<News> searchNewsByYear(int year) throws ServiceException;

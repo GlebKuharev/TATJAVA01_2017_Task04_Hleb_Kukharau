@@ -63,13 +63,6 @@ public class SQLNewsDAO implements NewsDAO {
 		
 	
 	@Override
-	public String searchNews(String keyword) throws DAOException {
-		
-		return null;
-	}
-	
-	
-	@Override
 	public ArrayList<News> searchNewsByName(String name) throws DAOException{
 		ArrayList<News> newsList = new ArrayList<News>();
 		Connection con = null;

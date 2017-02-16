@@ -20,8 +20,10 @@ public class SearchByName implements Command {
 
 	@Override
 	public String execute(String request) throws ControllerException {
+		
 		String response = null;
 		ArrayList<News> newsList = null;
+		
 		try {
 			StringTokenizer tokens = new StringTokenizer(request, " ");
 			String keyWord = tokens.nextToken();
@@ -30,13 +32,14 @@ public class SearchByName implements Command {
 			newsList = catalogService.searchNewsByName(keyWord); 
 			response = newsList.toString();
 		} catch (ServiceException | NoSuchElementException | NullPointerException e) { 
-			// write log 
 			log.error("Error during search_by_name procedure", e);
 			throw new ControllerException(e);
 		}
-		if (response == null) {
+		
+		if (response.equals("[]")) {
 			response = "nothing found";
 		}
+		
 		return response;
 	}
 

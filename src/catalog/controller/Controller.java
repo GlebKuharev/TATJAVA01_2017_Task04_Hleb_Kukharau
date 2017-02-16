@@ -14,18 +14,23 @@ public class Controller {
 	private final char paramDelimiter = ' '; 
 
 	public String executeTask(String request) { 
-		String commandName; 
+		
+		String commandName = null; 
 		Command executionCommand;
+		String response = null; 
 
-		commandName = request.substring(0, request.indexOf(paramDelimiter)); 
+		try {
+			commandName = request.substring(0, request.indexOf(paramDelimiter)); 
+		} catch (IndexOutOfBoundsException e) {
+			log.error("Controller executeTask exception", e);
+		}
+		
 		executionCommand = provider.getCommand(commandName);
 		
-		String response = null; 
 		try {
 			response = executionCommand.execute(request.substring(request.indexOf(paramDelimiter)+1));
 		} catch (ControllerException e) {
 			log.error("Controller executeTask exception", e);
-			response = e.getMessage();
 		}
 
 		return response;
