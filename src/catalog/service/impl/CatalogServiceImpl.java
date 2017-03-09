@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import catalog.bean.News;
 import catalog.dao.NewsDAO;
+import catalog.dao.connection.ConnectionPool;
+import catalog.dao.connection.ConnectionPoolException;
 import catalog.dao.exception.DAOException;
 import catalog.dao.impl.DAOFactory;
 import catalog.service.CatalogService;
@@ -94,6 +96,27 @@ public class CatalogServiceImpl implements CatalogService {
 			throw new ServiceException(e);
 		}
 		return newsList;
+	}
+
+
+	public static void initConnectionPool() throws ServiceException {
+
+		try {
+		ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+			log.error("InitConnectionPool exception in service class");
+			throw new ServiceException(e);
+		}
+	}
+
+
+	public static void destroyConnectionPool() throws ServiceException {
+		try {
+		ConnectionPool.getInstance().dispose();
+		} catch (ConnectionPoolException e) {
+			log.error("destroyConnectionPool exception in service class");
+			throw new ServiceException(e);
+		}
 	}
 
 }

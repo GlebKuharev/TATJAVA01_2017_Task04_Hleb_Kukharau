@@ -51,13 +51,14 @@ public final class ConnectionPool{
 		this.initPoolData();
 	}
 
-	public static ConnectionPool getInstance(){
+	public static ConnectionPool getInstance() throws ConnectionPoolException{
 		try{
 			if (instance == null){
 				instance = new ConnectionPool();
 			}
 		}catch(ConnectionPoolException e){
 			LOG.error("ConnectionPoolException: method getInstance, class ConnectionPool");
+			throw e;
 		}
 		return instance;
 	}

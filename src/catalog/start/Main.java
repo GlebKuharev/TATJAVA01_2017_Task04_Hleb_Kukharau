@@ -9,8 +9,11 @@ public class Main {
 
 		String command = "add book 1957 Atlas_Shrugged byAynRand";
 
-		
 		Controller controller = new Controller();
+		
+		System.out.println(controller.initConnectionPool());
+
+		
 		String response = controller.executeTask(command);
 		System.out.println(response);
 		
@@ -33,6 +36,8 @@ public class Main {
 		command = "search_by_year 2010";
 		response = controller.executeTask(command);
 		System.out.println(response);
+		
+		System.out.println(controller.destroyConnectionPool());
 	}
 
 }

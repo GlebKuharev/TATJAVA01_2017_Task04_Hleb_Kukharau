@@ -5,7 +5,6 @@ import catalog.dao.NewsDAO;
 public final class DAOFactory {
 	private static final DAOFactory instance = new DAOFactory(); 
 
-//	private final NewsDAO fileNewsImpl = new FileNewsDAO(); 
 	private final NewsDAO sqlNewsImpl = new SQLNewsDAO(); 
 	
 	private DAOFactory(){} 
@@ -17,8 +16,4 @@ public final class DAOFactory {
 		return sqlNewsImpl;
 	}
 	
-/*	public NewsDAO getNewsDAO(){ 
-		return FileNewsImpl;
-	}
-*/
 }
